@@ -5,11 +5,13 @@ jQuery plugin for lazy loading images.
 
 Based on jQuery lightweight boilerplate pattern: https://github.com/addyosmani/jquery-plugin-patterns/blob/master/patterns/jquery.basic.plugin-boilerplate.js
 
-<!--! Basic. -->
+HTML Usage
+=============
+Basic
 <div class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg" }}'></div>
 <img class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg" }}' height="120" src="img/some-transparent-image.gif" width="200"></div>
 
-<!--! Multiple resolutions: define the width as the key name in the data object. -->
+Multiple resolutions: define the width as the key name in the data object.
 <div class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>
 
 // Basic.
