@@ -3,7 +3,7 @@ jquery-dawdle
 
 jQuery plugin for lazy loading images.
 
-Based on jQuery lightweight boilerplate pattern: https://github.com/addyosmani/jquery-plugin-patterns/blob/master/patterns/jquery.basic.plugin-boilerplate.js
+jQuery lightweight boilerplate pattern: https://github.com/addyosmani/jquery-plugin-patterns/blob/master/patterns/jquery.basic.plugin-boilerplate.js
 
 HTML Usage
 =============
