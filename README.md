@@ -20,9 +20,11 @@ JavaScript
 ----------------
 
 ### Basic
+
 `$('.dawdle').dawdle();`
 
 ### Multiple resolutions
+
 `$('.dawdle').dawdle({
   sizes : [640]
 });`
@@ -30,8 +32,10 @@ JavaScript
 ### Resize functionality
 
 This will allow multiple resolutions to be switched on the fly when resizing the browser.
-@resize - true|false; default=true; Enable/disable resize functionality.
-@resizeThrottle - (millisecond); default=100; Throttle functionality will control how frequently the window resize event is fired.  Higher number = less frequent.
+
+@resize - true|false; default=true; Enable/disable resize functionality.<br />
+@resizeThrottle - (millisecond); default=100; Throttle functionality will control how frequently the window resize event is fired.  Higher number is less frequent.
+
 `$('.dawdle').dawdle({
 	resize : true
 	, resizeThrottle : 100
