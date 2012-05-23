@@ -1,4 +1,4 @@
-jquery-dawdle
+jquery-slacker
 =============
 
 jQuery plugin for lazy loading images.
@@ -9,23 +9,23 @@ HTML
 ----------
 ### Basic
 
-`<div class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg" }}'></div>`
-`<img class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg" }}' height="120" src="img/some-transparent-image.gif" width="200"></div>`
+`<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg" }}'></div>`
+`<img class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg" }}' height="120" src="img/some-transparent-image.gif" width="200"></div>`
 
 ### Multiple resolutions
 
-`<div class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>`
+`<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>`
 
 JavaScript
 ----------------
 
 ### Basic
 
-`$('.dawdle').dawdle();`
+`$('.slacker').slacker();`
 
 ### Multiple resolutions
 
-`$('.dawdle').dawdle({
+`$('.slacker').slacker({
   sizes : [640]
 });`
 
@@ -36,7 +36,7 @@ This will allow multiple resolutions to be switched on the fly when resizing the
 @resize - true|false; default=true; Enable/disable resize functionality.<br />
 @resizeThrottle - (millisecond); default=100; Throttle functionality will control how frequently the window resize event is fired.  Higher number is less frequent.
 
-`$('.dawdle').dawdle({
+`$('.slacker').slacker({
 	resize : true
 	, resizeThrottle : 100
 });`
@@ -44,7 +44,7 @@ This will allow multiple resolutions to be switched on the fly when resizing the
 ### Animation
 
 There are two handlers - 'beforeLoad' and 'onLoad'.
-`$('.dawdle').dawdle({
+`$('.slacker').slacker({
 	animate : {
 		beforeLoad : function(el) {
 			el.css({ opacity:0 });
