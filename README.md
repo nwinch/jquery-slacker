@@ -1,4 +1,4 @@
-jquery-slacker
+Slacker
 =============
 
 jQuery plugin for lazy loading images.
@@ -18,6 +18,11 @@ HTML
 ### Multiple resolutions
 
 `<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>`
+
+### High quality images
+You can split any resolution check into high and low quality image options.  Slacker will detect if you are using a high pixel density 
+ratio (current check is for > 1).
+`<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg", "640":{ "reshigh":"img/image-640-high.jpg", "reslow":"img/image-640-low.jpg" }}}'></div>`
 
 JavaScript
 ----------
