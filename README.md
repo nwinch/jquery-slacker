@@ -5,8 +5,13 @@ jQuery plugin for lazy loading images.
 
 jQuery lightweight boilerplate pattern: https://github.com/addyosmani/jquery-plugin-patterns/blob/master/patterns/jquery.basic.plugin-boilerplate.js
 
+Why?
+----
+There are many great lazy load plugins out there, but none seemed to capture everything that I wanted to achieve for a project at the time.  So I 
+created my own - with the specific aim that it would load different size/quality images on the fly and only when required.
+
 HTML
-----------
+----
 ### Basic
 
 `<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg" }}'></div>`
@@ -17,7 +22,7 @@ HTML
 `<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>`
 
 JavaScript
-----------------
+----------
 
 ### Basic
 
