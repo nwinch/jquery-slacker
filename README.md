@@ -3,8 +3,6 @@ jquery-slacker
 
 jQuery plugin for lazy loading images.
 
-jQuery lightweight boilerplate pattern: https://github.com/addyosmani/jquery-plugin-patterns/blob/master/patterns/jquery.basic.plugin-boilerplate.js
-
 Why?
 ----
 There are many great lazy load plugins out there, but none seemed to capture everything that I wanted to achieve for a project at the time.  So I 
