@@ -1,37 +1,37 @@
 /**
 * Author: Nathan Winch
 * Date: May 10, 2012
-* Plugin Name: Dawdle
+* Plugin Name: slacker
 * Description: jQuery plugin for lazy loading images.
 * Template: jQuery lightweight plugin boilerplate.
 * Template Author: @ajpiano
 * Usage:
 
 <!--! Basic. -->
-<div class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg" }}'></div>
-<img class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg" }}' height="120" src="img/some-transparent-image.gif" width="200"></div>
+<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg" }}'></div>
+<img class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg" }}' height="120" src="img/some-transparent-image.gif" width="200"></div>
 
 <!--! Multiple resolutions: define the width as the key name in the data object. -->
-<div class="dawdle" data-dawdle='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>
+<div class="slacker" data-slacker='{ "sizes":{ "original":"img/image1.jpg", "640":"img/image-640.jpg" }}'></div>
 
 // Basic.
-$('.dawdle').dawdle();
+$('.slacker').slacker();
 
 // Multiple resolutions: must supply resolutions during setup for markup references to be picked up.
-$('.dawdle').dawdle({
+$('.slacker').slacker({
 	sizes : [640]
 });
 
 // Resize functionality: this will allow multiple resolutions to be switched on the fly when resizing the browser.
 // @resize - true|false; default=true; Enable/disable resize functionality.
 // @resizeThrottle - (millisecond); default=100; Throttle functionality will control how frequently the window resize event is fired.  Higher number = less frequent.
-$('.dawdle').dawdle({
+$('.slacker').slacker({
 	resize : true
 	, resizeThrottle : 100
 });
 
 // Animation: there are two handlers - 'beforeLoad' and 'onLoad'.
-$('.dawdle').dawdle({
+$('.slacker').slacker({
 	animate : {
 		beforeLoad : function(el) {
 			el.css({ opacity:0 });
@@ -44,13 +44,12 @@ $('.dawdle').dawdle({
 
 */
 ;(function ( $, window, document, undefined ) {
-	var pluginName = 'dawdle',
+	var pluginName = 'slacker',
         defaults = {
             animate : {
 				beforeLoad : false
 				, onLoad : false
 			}
-			, highRes : false
 			, resize : true
 			, resizeThrottle : 200
 			, sizes : [640]
@@ -177,8 +176,8 @@ $('.dawdle').dawdle({
 			return false;
 		}
         // Are high resolution images are supported by current device?
-		, supportHighRes : function(options) {
-			return (window.devicePixelRatio > 1 && options.highRes) ? true : false;
+		, supportHighRes : function() {
+			return (window.devicePixelRatio > 1) ? true : false;
 		}
 		// Check we are viewing on a mobile device: the term 'mobile' is used loosely here 
 		// as we using the check for anything other than 'original' image listings.
@@ -226,7 +225,7 @@ $('.dawdle').dawdle({
 				});
 				
 				// found correctly sized image to load.
-				if (foundImg !== undefined && toType(foundImg) === 'string') {
+				if (foundImg !== undefined) {
 					this.loadImage(el, options, foundImg, true);
 				}
 			} else {
@@ -240,16 +239,32 @@ $('.dawdle').dawdle({
 				, $el = $(el)
 				, elN = $el[0]
 				, elTag = elN.tagName
-				, tempImg
 				, animation = options.animate
+				, cssExtra = {}
+				, usingHighRes = false
+				, tempImg
 				, imgLoaded;
 			
 			// set 'anim' to false if we don't want animation.
 			anim = anim || false;
 			
+			
+
 			// if we are supporting high res images and it has been listed.
 			if (Helper.toType(img) === 'object') {
-				img = supportHighRes() ? img.reshigh : img.reslow;
+				if (thisPlugin.supportHighRes()) {
+					if (img.reshigh !== undefined) {
+						img = img.reshigh;
+						cssExtra = { backgroundSize:'100%' };
+						usingHighRes = true;
+					} else if (img.reshigh === undefined && img.reslow !== undefined) {
+						img = img.reslow;
+					}
+				} else {
+					if (img.reslow !== undefined) {
+						img = img.reslow;
+					}
+				}
 			}
 			
 			// if image already loaded, we don't need to load again - only if different.
@@ -266,7 +281,9 @@ $('.dawdle').dawdle({
 			$('<img />')
 				.attr('src', img)
 				.one('load', function() {
-					var self = $(this);
+					var self = $(this)
+						, maxWidth
+						, ratio;
 
 					self.appendTo(thisPlugin.$dock);
 				
@@ -275,14 +292,25 @@ $('.dawdle').dawdle({
 					if (elTag.toLowerCase() === 'img') {
 						elN.src = img;
 					} else {
-						$el.css('background-image', 'url(' + img + ')');
+						$el.css($.extend({ backgroundImage : 'url(' + img + ')'}, cssExtra));
+					}
+
+					if (usingHighRes) {
+						maxWidth = parseInt(self[0].width / 2);
+				        ratio = 0;
+
+				        // check if the current width is larger than the max
+				        if (self[0].width > maxWidth) {
+				            ratio = maxWidth / self[0].width;
+				        }
+
+				        ratio = { width:maxWidth, height:parseInt(self[0].height * ratio) };
+					} else {
+						ratio = { width:self[0].width, height:self[0].height };
 					}
 
 					// adjust height/width.
-					$el.css({
-						width : self[0].width
-						, height : self[0].height
-					});
+					$el.css(ratio);
 					
 					// check for onLoad animate event.
 					if (thisPlugin.callbackExists(animation, 'onLoad') && anim) {
@@ -304,7 +332,7 @@ $('.dawdle').dawdle({
 				, jsonLazy = $el.data(this._name)
 				, jsonStr = JSON.stringify(jsonLazy)
 				, jsonObj = $.parseJSON(jsonStr);
-			
+
 			// check data-lazy is a well-formed JSON structure.
 			if (!jsonLazy && toType(jsonObj) !== 'object') {
 				return false;
